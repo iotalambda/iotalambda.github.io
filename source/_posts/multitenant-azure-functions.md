@@ -1,5 +1,6 @@
 ---
 title: Multitenant Azure Functions
+categories: azure
 ---
 
 Azure Function runtime provides a smorgasbord of features out-of-box. One of those features isn´t <i>multitenancy</i> (except when talking about clients using Azure AD) but one of those features is <i>Function keys</i>. In this blog post I explore how tenant specific Function keys could be used to enable multitenancy in simple scenarios. Ideally introducing a new tenant - assuming that no customization is required - should be only a question of creating a Function key for said tenant. *Disclaimer:* In many cases using Function keys is not a sufficient authentication method, and OAuth2 or mutual-auth or at least API Key auth with Azure Vault stored keys should be used instead.
