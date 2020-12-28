@@ -22,3 +22,7 @@ author:
 # Miscellaneous
 rss: /atom.xml
 favicon: /images/favicon.ico
+
+# github comment
+git_commit:
+  enable: false
