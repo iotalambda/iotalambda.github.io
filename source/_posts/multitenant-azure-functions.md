@@ -1,9 +1,10 @@
 ---
 title: Multitenant Azure Functions
+date: 2020-12-27 10:00:00
 categories: azure
 ---
 
-Azure Function runtime provides a smorgasbord of features out-of-box. One of those features isn´t <i>multitenancy</i> (except when talking about clients using Azure AD) but one of those features is <i>Function keys</i>. In this blog post I explore how tenant specific Function keys could be used to enable multitenancy in simple scenarios. Ideally introducing a new tenant - assuming that no customization is required - should be only a question of creating a Function key for said tenant. *Disclaimer:* In many cases using Function keys is not a sufficient authentication method, and OAuth2 or mutual-auth or at least API Key auth with Azure Vault stored keys should be used instead.
+Azure Function runtime provides a smorgasbord of features out-of-box. One of those features isn´t <i>multitenancy</i> (except when talking about clients using Azure AD) but one of those features is <i>Function keys</i>. In this blog post I explore how tenant specific Function keys could be used to enable multitenancy in simple scenarios. Ideally introducing a new tenant - assuming that no customization is required - should be only a question of creating a Function key for said tenant. _Disclaimer:_ In many cases using Function keys is not a sufficient authentication method, and OAuth2 or mutual-auth or at least API Key auth with Azure Vault stored keys should be used instead.
 
 ## A new ⚡
 
@@ -62,6 +63,7 @@ public static class EnqueueForTenantV2
   }
 }
 ```
+
 but this is not very reusable. Preferably all of this would be checked with an attribute of some sort.
 
 ## Filters for Functions
@@ -78,13 +80,13 @@ public class AuthorizeTenantAttribute : FunctionInvocationFilterAttribute
     // Check if attempted tenant id matches the actual tenant id
     if (attemptedTenantId != actualTenantId)
       throw new UnauthorizedAccessException();
-    
+
     return base.OnExecutingAsync(executingContext, cancellationContext);
   }
 }
 ```
 
-and thus our Function can be reduced to 
+and thus our Function can be reduced to
 
 ```csharp
 [StorageAccount("AzureWebJobsStorage")]
@@ -112,10 +114,12 @@ Another problem is that we should be able to `GetTenantIdsSomehow`. This, on the
 `AuthorizeTenantAttribute`´s `OnExecutingAsync` has this `FunctionExecutingContext executingContext` parameter which can be used to access the arguments that `EnqueueForTenantV2` was invoked with. Therefore, we need to create a <i>custom binding</i> that does all the heavylifting regarding the extraction of `tenantId`s and then just provides them to `AuthorizeTenantAttribute` via `FunctionExecutingContext executingContext`.
 
 In order to bind our desired values to a Function parameter, we need a new <i>parameter</i> for the Function and a <i>binding</i> that sets the parameter value. Off the top of our heads, let´s jut decide that
-* the parameter type is `TenantContext`, which holds all information related to the tenant that´s currently invoking the Function and
-* the binding type is `Tenancy`.
+
+- the parameter type is `TenantContext`, which holds all information related to the tenant that´s currently invoking the Function and
+- the binding type is `Tenancy`.
 
 Now our Function signature looks like this
+
 ```csharp
 ...
   [FunctionName("EnqueueForTenantV2")]
@@ -162,7 +166,7 @@ public class AuthorizeTenantAttribute : FunctionInvocationFilterAttribute
     // Check if attempted tenant id matches the actual tenant id
     if (attemptedTenantId != actualTenantId)
       throw new UnauthorizedAccessException();
-    
+
     return base.OnExecutingAsync(executingContext, cancellationContext);
   }
 }
@@ -286,4 +290,4 @@ Even from the infrastructure point of view, introducing new tenants should reall
 
 One can also choose a strategy for the tenant keys, as Function keys can allow either <i>Function level</i> or <i>Host level</i> access. If one does not want to provide tenants access to each function separately, then one should use Host keys instead.
 
-In the end this was just an experimentation and is not recommended for production use, because Function keys are not as safe mean of authorization as, for example OAuth2 or mutual certificate authentication.
+In the end this was just an experimentation and is not recommended for production use, because Function keys are not as safe mean of authorization as, for example, OAuth2 or mutual certificate authentication.
