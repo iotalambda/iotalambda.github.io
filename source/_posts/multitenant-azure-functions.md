@@ -280,7 +280,7 @@ public class Startup : IWebJobsStartup
 }
 ```
 
-And there we have it! Now Apple and Microsoft can no more enqueue to each other's queues. If the attempted and actual `tenantId`s do not match, `AuthorizeTenantAttribute` will throw an exception and the request will be terminated before the Function is invoked.
+And there we have it! Now Apple and Microsoft can no more enqueue to each other´s queues. If the attempted and actual `tenantId`s do not match, `AuthorizeTenantAttribute` will throw an exception and the request will be terminated before the Function is invoked.
 
 ## The Hindsight
 
