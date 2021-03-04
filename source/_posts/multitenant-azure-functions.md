@@ -15,7 +15,7 @@ Here´s a plain Function with an HTTP trigger. For every incoming `POST host.com
 public static class EnqueueForTenantV1
 {
   [FunctionName("EnqueueForTenantV1")]
-  [return: Queue("{tenantId"})]
+  [return: Queue("{tenantId}")]
   public static Task<string> Run(
     [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "enqueueV1/{tenantId}")] HttpRequest req
   )
@@ -46,7 +46,7 @@ Azure Function runtime includes the `keyId` of the used key [as a claim](https:/
 public static class EnqueueForTenantV2
 {
   [FunctionName("EnqueueForTenantV2")]
-  [return: Queue("{tenantId"})]
+  [return: Queue("{tenantId}")]
   public static Task<string> Run(
     [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "enqueueV2/{tenantId}")] HttpRequest req,
     string tenantId
@@ -93,7 +93,7 @@ and thus our Function can be reduced to
 public static class EnqueueForTenantV2
 {
   [FunctionName("EnqueueForTenantV2")]
-  [return: Queue("{tenantId"})]
+  [return: Queue("{tenantId}")]
   [AuthorizeTenant]
   public static Task<string> Run(
     [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "enqueueV2/{tenantId}")] HttpRequest req
@@ -123,7 +123,7 @@ Now our Function signature looks like this
 ```csharp
 ...
   [FunctionName("EnqueueForTenantV2")]
-  [return: Queue("{tenantId"})]
+  [return: Queue("{tenantId}")]
   [AuthorizeTenant]
   public static Task<string> Run(
     [HttpTrigger(AuthorizationLevel.Function, "POST", Route = "enqueueV2/{tenantId}")] HttpRequest req,
