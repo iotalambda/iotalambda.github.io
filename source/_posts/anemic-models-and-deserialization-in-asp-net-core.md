@@ -103,7 +103,7 @@ public class PropertyJsonConverter : JsonConverter<Property>
         // In case of objects and arrays we have to recurse deeper to the hierarchy, as
         // there may be Property<>s somewhere there!
         var innerReader = JObject.Load(reader).CreateReader();
-        value = serializer.Deserializer(innerReader, innerType);
+        value = serializer.Deserialize(innerReader, innerType);
         break;
 
       default: // All else is just simple values which we can use as is
