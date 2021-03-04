@@ -37,7 +37,7 @@ We´d still want to leverage the entire ASP.NET Core ecosystem, and thus we shou
 
 ## Property<>
 
-Let's refine the example and invent a magic type, `Property<>`:
+Let´s refine the example and invent a magic type, `Property<>`:
 
 ```c#
 public class MyModel
@@ -97,7 +97,7 @@ public class PropertyJsonConverter : JsonConverter<Property>
       case JsonToken.StartArray: // or a JSON array
         
         // .GetGenericArgument() is just util for .GetGenericArguments()[0].
-        // Let's find out what the TValue in Property<TValue> is
+        // Let´s find out what the TValue in Property<TValue> is
         var innerType = objectType.GetGenericArgument();
 
         // In case of objects and arrays we have to recurse deeper to the hierarchy, as
@@ -146,4 +146,4 @@ and even simpler requests
 ```
 and each case is truly deserialized and bound to `myModel` as expected: `HasValue` is `false` in the lattermost scenario.
 
-There is still a plethora of viewpoints to investigate, but this result is at least slightly encouraging. I pushed the code to a [GitHub repo](https://github.com/iotalambda/Lattia). In the next part I will discuss the other side of the coin, serialization, and a very related topic, auto-mapping back and forth between models with `Property<>`s and more standard entity classes. For clarity, I'll call this <i>endeavour/project</i> "Lattia", since it aims to refine some of the most basic building blocks for anemic APIs 😉.
+There is still a plethora of viewpoints to investigate, but this result is at least slightly encouraging. I pushed the code to a [GitHub repo](https://github.com/iotalambda/Lattia). In the next part I will discuss the other side of the coin, serialization, and a very related topic, auto-mapping back and forth between models with `Property<>`s and more standard entity classes. For clarity, I´ll call this <i>endeavour/project</i> "Lattia", since it aims to refine some of the most basic building blocks for anemic APIs 😉.
