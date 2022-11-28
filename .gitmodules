@@ -1,3 +1,4 @@
 [submodule "themes/concise"]
 	path = themes/concise
 	url = https://github.com/iotalambda/hexo-theme-concise.git
+	branch = master
