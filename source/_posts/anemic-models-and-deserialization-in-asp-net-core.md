@@ -54,7 +54,7 @@ public class Property<TValue> : Property
   public TValue Value => ObjValue;
   
   public Property(TValue value, bool hasValue)
-    base(value, hasValue)
+    : base(value, hasValue)
   {
   }
 }
@@ -69,7 +69,6 @@ public class Property
   public Property(object value, bool hasValue)
   {
     ObjValue = value;
-    
     HasValue = hasValue;
   }
 }
