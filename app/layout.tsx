@@ -23,8 +23,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable}`}>
-      <body className="bg-slate-200">
-        <nav className="relative flex w-full flex-wrap items-center justify-between bg-indigo-600 py-2 shadow-indigo-300 shadow-2xl font-sans2">
+      <body className="bg-slate-200 dark:bg-slate-700">
+        <nav className="relative flex w-full flex-wrap items-center justify-between bg-indigo-600 py-2 shadow-indigo-300 dark:shadow-indigo-800 shadow-2xl font-sans2">
           <div className="flex w-full flex-wrap items-center justify-between px-2">
             <div>
               <Link className="text-2xl font-semibold text-neutral-100 dark:text-neutral-200" href="/">

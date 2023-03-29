@@ -40,8 +40,22 @@ div[data-rehype-pretty-code-title] {
   @apply text-violet-900 font-mono;
 }
 
+@media (prefers-color-scheme: dark) {
+  pre[data-theme="light"],
+  code[data-theme="light"] {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+  pre[data-theme="dark"],
+  code[data-theme="dark"] {
+    display: none;
+  }
+}
+
 article p a {
-  @apply text-amber-700 underline;
+  @apply text-amber-700 dark:text-amber-200 underline;
 }
 
 article ul {
@@ -65,5 +79,5 @@ article h2 {
 }
 
 article :not(pre) > code {
-  @apply bg-slate-200 rounded-md p-1 font-mono;
+  @apply bg-slate-200 dark:bg-slate-700 rounded-md p-1 font-mono;
 }

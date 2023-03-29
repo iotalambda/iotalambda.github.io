@@ -14,12 +14,12 @@ export default function Home() {
           <li key={i} className="w-[min(800px,100%)]">
             <Link
               href={`/${year}/${month}/${day}/${slug}`}
-              className="bg-slate-100 inline-block rounded-sm shadow-md px-3 py-5 relative"
+              className="bg-slate-100 dark:bg-slate-800 inline-block rounded-sm shadow-md px-3 py-5 relative"
             >
               <WrittenDate date={date} />
               <div className="pl-2">
                 <h3 className="text-xl py-2">{title}</h3>
-                <p className="text-sm text-slate-600">{intro}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300">{intro}</p>
               </div>
             </Link>
           </li>

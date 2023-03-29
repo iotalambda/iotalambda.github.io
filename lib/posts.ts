@@ -41,7 +41,7 @@ const processor = unified()
   .use(rehypeAutolinkHeadings, {
     behavior: "wrap"
   })
-  .use(rehypePrettyCode, { theme: "github-light" })
+  .use(rehypePrettyCode, { theme: { light: "github-light", dark: "github-dark" } })
   .use(rehypeStringify)
 
 type GetPostByIdArgs = PostId

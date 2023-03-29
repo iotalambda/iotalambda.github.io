@@ -13,12 +13,12 @@ export default async function Post(props: PostProps) {
     <div className="md:px-10 mb-20">
       <article>
         <header className="px-5 mb-4 py-10 relative">
-          <h1 className="text-3xl leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+          <h1 className="text-3xl leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-gray-100">
             {title}
           </h1>
           <WrittenTime date={date} className="absolute" />
         </header>
-        <div className="bg-slate-100 p-5 rounded shadow-lg">
+        <div className="bg-slate-100 dark:bg-slate-800 p-5 rounded shadow-lg">
           {prenote && (
             <>
               <p className="italic text-slate-400 p-4" dangerouslySetInnerHTML={{ __html: prenote }} />
