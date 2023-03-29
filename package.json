@@ -1,27 +1,39 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
+  "name": "food-for-ai",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server"
-  },
-  "hexo": {
-    "version": "5.3.0"
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "next lint",
+    "format": "prettier --write \"./**/*.{ts,tsx}\"",
+    "generate-barrels": "barrelsby -D -d \"./lib\""
   },
   "dependencies": {
-    "hexo": "^5.0.0",
-    "hexo-generator-archive": "^1.0.0",
-    "hexo-generator-category": "^1.0.0",
-    "hexo-generator-index": "^2.0.0",
-    "hexo-generator-tag": "^1.0.0",
-    "hexo-renderer-ejs": "^1.0.0",
-    "hexo-renderer-less": "^2.0.2",
-    "hexo-renderer-marked": "^3.0.0",
-    "hexo-renderer-stylus": "^2.0.0",
-    "hexo-server": "^2.0.0",
-    "hexo-theme-landscape": "^0.0.3"
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "gray-matter": "^4.0.3",
+    "next": "^13.2.5-canary.20",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-pretty-code": "^0.9.4",
+    "rehype-slug": "^5.1.0",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "shiki": "^0.14.1",
+    "typescript": "5.0.2",
+    "unified": "^10.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.3",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "autoprefixer": "^10.4.14",
+    "barrelsby": "^2.5.1",
+    "postcss": "^8.4.21",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "tailwindcss": "^3.2.7"
   }
 }
