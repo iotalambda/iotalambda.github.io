@@ -140,6 +140,8 @@ Finally, let's try debugging:
 
 Then, the debugger in Edge DevTools will break at the `debugger` statement of the original TypeScript code! _And_ the inspected function has the `: number` return type 😎.
 
+![](debuggable-scripting-edge.png)
+
 ## Considerations
 
 As we can see, ClearScript supports the desired flow. However, as explained earlier, there are some caveats too. Besides the mentioned risks in executing untrusted code, one has to be aware that V8 is not Node.js and therefore ClearScript doesn't include Node's event loop. This means that the hypothetical script host would be single-threaded per `V8ScriptEngine` instance (and each instance has a non-trivial memory overhead). But one could work around this to some extent by [pooling `V8ScriptEngine` instances](https://github.com/Microsoft/ClearScript/issues/53#issuecomment-387387543).
