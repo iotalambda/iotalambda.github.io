@@ -15,6 +15,7 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run build
+      - run: cp CNAME out/
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
