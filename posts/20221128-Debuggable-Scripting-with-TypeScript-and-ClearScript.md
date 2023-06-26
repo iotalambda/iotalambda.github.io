@@ -140,7 +140,7 @@ Finally, let's try debugging:
 
 Then, the debugger in Edge DevTools will break at the `debugger` statement of the original TypeScript code! _And_ the inspected function has the `: number` return type 😎.
 
-![](debuggable-scripting-edge.png)
+![](/debuggable-scripting-edge.png)
 
 ## Considerations
 
