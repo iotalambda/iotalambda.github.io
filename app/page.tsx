@@ -14,7 +14,7 @@ export default function Home() {
           <li key={i} className="w-[min(800px,100%)]">
             <Link
               href={`/${year}/${month}/${day}/${slug}`}
-              className="bg-slate-100 dark:bg-slate-800 inline-block rounded-sm shadow-md px-3 py-5 relative"
+              className="bg-slate-100 dark:bg-slate-800 inline-block rounded-sm shadow-md px-3 py-5 relative w-full"
             >
               <WrittenDate date={date} />
               <div className="pl-2">
