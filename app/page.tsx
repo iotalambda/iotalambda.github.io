@@ -1,7 +1,11 @@
 import Link from "next/link"
 
 import WrittenDate from "@/app/components/WrittenTime"
-import { getPostInfosOrderedByDateDesc } from "@/lib"
+import { BASE_TITLE, getPostInfosOrderedByDateDesc } from "@/lib"
+
+export const metadata = {
+  title: `Articles | ${BASE_TITLE}`
+}
 
 export default function Home() {
   const postInfos = getPostInfosOrderedByDateDesc()

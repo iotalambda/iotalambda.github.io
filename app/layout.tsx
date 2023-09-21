@@ -1,3 +1,4 @@
+import { BASE_TITLE } from "@/lib"
 import { Inconsolata, Open_Sans } from "next/font/google"
 import Link from "next/link"
 import "./globals.css"
@@ -16,8 +17,8 @@ const mono = Inconsolata({
 })
 
 export const metadata = {
-  title: "food for ai blog",
-  description: "Blog about .NET, Azure, React and whatever comes to mind"
+  title: BASE_TITLE,
+  description: "Blog about .NET, Azure, React and whatever comes to mind."
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,9 +1,18 @@
 import WrittenTime from "@/app/components/WrittenTime"
-import { getPostById, getPostInfosOrderedByDateDesc } from "@/lib"
+import { BASE_TITLE, getPostById, getPostInfosOrderedByDateDesc } from "@/lib"
+import { Metadata } from "next"
 import "./styles.css"
 
 type PostProps = {
   params: { id: [string, string, string, string] }
+}
+
+export async function generateMetadata(props: PostProps): Promise<Metadata> {
+  const [year, month, day, slug] = props.params.id
+  const { title } = await getPostById({ year, month, day, slug })
+  return {
+    title: `${title} | ${BASE_TITLE}`
+  }
 }
 
 export default async function Post(props: PostProps) {
