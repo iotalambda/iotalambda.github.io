@@ -67,7 +67,8 @@ export function getPostInfosOrderedByDateDesc() {
     const month = date.slice(4, 6)
     const day = date.slice(6, 8)
     const id: PostId = { year, month, day, slug }
-    const intro = content.substring(0, content.trimStart().indexOf("\n") + 1)
+    let intro = content.substring(0, content.trimStart().indexOf("\n")) + "."
+
     return {
       id,
       intro,
