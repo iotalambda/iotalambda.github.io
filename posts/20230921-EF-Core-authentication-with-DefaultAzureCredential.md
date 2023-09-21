@@ -1,5 +1,5 @@
 ---
-title: EF Auth with DefaultAzureCredential
+title: EF Core authentication with DefaultAzureCredential
 date: 2023-09-21 21:00
 prenote: This article was written based on Microsoft.EntityFrameworkCore 7.0.10.0 and Visual Studio 2022 17.6.6.
 ---
