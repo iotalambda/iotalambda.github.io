@@ -10,7 +10,7 @@ export const metadata = {
 export default function Home() {
   const postInfos = getPostInfosOrderedByDateDesc()
   return (
-    <ol className="flex flex-col justify-center items-center gap-4">
+    <ol className="flex flex-col justify-center items-center gap-4 pb-8">
       {postInfos.map((p, i) => {
         const { id, date, title, intro } = p
         const { year, month, day, slug } = id
