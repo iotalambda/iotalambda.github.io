@@ -1,10 +1,10 @@
 ---
-title: Deep dive to Azure Functions with golang
+title: Deep dive to Azure Functions with Go
 date: 2023-11-03 00:00
 prenote: The code discussed in this blog post is available on <a href="https://github.com/iotalambda/beenotif">GitHub</a>.
 ---
 
-Azure Functions has supported _Custom Handlers_ since 2020. With Custom Handlers any web server that is able to run on one the available Azure Functions platforms can function as a handler. So in this article we'll delve into the details of implementing a timer triggered Azure Function with golang – golang not being a first-class citizen in the Azure Functions world (unlike C#, Java, JavaScript, TypeScript, Python and PowerShell).
+Azure Functions has supported _Custom Handlers_ since 2020. With Custom Handlers any web server that is able to run on one the available Azure Functions platforms can function as a handler. So in this article we'll delve into the details of implementing a timer triggered Azure Function with Go – Go not being a first-class citizen in the Azure Functions world (unlike C#, Java, JavaScript, TypeScript, Python and PowerShell).
 
 My goal was to create a scheduled task that is able to scrape data from a web page periodically and send me a push notification if the data has changed. Ultimately I ended up creating a relatively generic solution for this purpose, available in the git repo.
 
@@ -29,7 +29,7 @@ In the newly created `timer` directory we now have a `function.json` file:
 
 It's all quite clear. The `name` property seems a bit suspicious, but I suppose it's just a name for an individual schedule (could be e.g. "hourly"), and not something that affects the control flow that much.
 
-Next the `host.json` file. Our golang web server implementation will be an executable, so the `customHandler` section should be configured as follows:
+Next the `host.json` file. Our Go web server implementation will be an executable, so the `customHandler` section should be configured as follows:
 
 ```json
 {
@@ -106,7 +106,7 @@ With `EvaluateAsDevTools` we are able to run JavaScript and DOM queries exactly 
 
 `chromedp` requires a `chrome` executable to function and apparently there [has](https://learn.microsoft.com/en-us/answers/questions/1354174/cannot-find-chrome-binary-in-azure-function-app) [been](https://anthonychu.ca/post/azure-functions-headless-chromium-puppeteer-playwright/) [some](https://stackoverflow.com/questions/65609204/puppeteer-throws-launch-exception-when-deployed-on-azure-functions-node-on-linux) issues with it in the Consumption Plan. One of the ways to deal with this is naturally to have the Function App running in a container with all the necessary dependencies. But Consumption Plan does not support Docker, so I'd need to pay a non-zero amount of money for other tiers and that's unacceptable. But we can simply omit this issue by downloading prebuilt Chromium binaries and deploying them along the application.
 
-On [chromium.org](https://www.chromium.org/getting-involved/download-chromium/) there's a link to a [repo](https://github.com/scheib/chromium-latest-linux) with a [script](https://github.com/scheib/chromium-latest-linux/blob/master/update.sh) that downloads the latest binaries. That could be tweaked for our needs and our directory structure! The tweaked version is in [publish.sh](https://github.com/iotalambda/beenotif/blob/main/publish.sh). This script file is meant to be executed either manually before deploying from VSCode or automatically by pipelines.
+In [chromium.org](https://www.chromium.org/getting-involved/download-chromium/) there's a link to a [repo](https://github.com/scheib/chromium-latest-linux) with a [script](https://github.com/scheib/chromium-latest-linux/blob/master/update.sh) that downloads the latest binaries. That could be tweaked for our needs and our directory structure! The tweaked version is in [publish.sh](https://github.com/iotalambda/beenotif/blob/main/publish.sh). This script file is meant to be executed either manually before deploying from VSCode or automatically by pipelines.
 
 The last thing to do is tell `chromedp` where the binary is. We can implement our own `ExecAllocator`:
 
