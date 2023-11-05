@@ -85,10 +85,17 @@ Microsoft's tutorial page offers an example on how to create an HTTP triggered f
 
 ```go
 http.HandleFunc("/timer", func(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("Hey!\n")
-	w.WriteHeader(201)
+		fmt.Print("Hey!\n")
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(201)
+		_, err = w.Write([]byte("{}"))
+		if err != nil {
+			log.Fatal("Could not write response.")
+		}
 })
 ```
+
+Note that the handler must return something, or otherwise the function execution [will never be marked as completed](https://learn.microsoft.com/en-us/answers/questions/614450/custom-handler-function-not-marking-run-as-complet).
 
 ## Scraping with `chromedp`
 
