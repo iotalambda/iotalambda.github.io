@@ -20,7 +20,7 @@ export default async function Post(props: PostProps) {
   const { html, title, prenote, date } = await getPostById({ year, month, day, slug })
   return (
     <div className="flex justify-center">
-      <div className="md:px-10 max-w-7xl mb-12">
+      <div className="md:px-10 min-w-0 max-w-7xl mb-12">
         <article>
           <header className="px-5 mb-4 py-10 relative">
             <h1 className="text-3xl leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-gray-100">
