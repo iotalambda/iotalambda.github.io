@@ -75,7 +75,11 @@ article ol > li {
 }
 
 article h2 {
-  @apply text-2xl lg:text-3xl;
+  @apply text-2xl lg:text-3xl pt-4;
+}
+
+article h3 {
+  @apply text-xl lg:text-xl pt-4;
 }
 
 article :not(pre) > code {

@@ -25,7 +25,7 @@ html {
 html,
 body {
   max-width: 100vw;
-  font-family: var(--font-sans2);
+  font-family: var(--font-sans);
   height: 100%;
 }
 
