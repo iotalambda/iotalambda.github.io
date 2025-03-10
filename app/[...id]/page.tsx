@@ -44,6 +44,6 @@ export default async function Post(props: PostProps) {
 }
 
 export async function generateStaticParams() {
-  const infos = getPostInfosOrderedByDateDesc()
+  const infos = await getPostInfosOrderedByDateDesc()
   return infos.map(({ id }) => ({ id: Object.values(id) }))
 }

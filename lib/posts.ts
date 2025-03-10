@@ -57,23 +57,28 @@ export async function getPostById(args: GetPostByIdArgs) {
   }
 }
 
-export function getPostInfosOrderedByDateDesc() {
+export async function getPostInfosOrderedByDateDesc() {
   const fileNames = fs.readdirSync(postsDir).sort().reverse()
-  const infos = fileNames.map(fn => {
-    const { data, content } = readMatter(fn)
-    const [date, ...rest] = fn.replace(/\.md$/, "").split("-")
-    const slug = rest.join("-")
-    const year = date.slice(0, 4)
-    const month = date.slice(4, 6)
-    const day = date.slice(6, 8)
-    const id: PostId = { year, month, day, slug }
-    let intro = content.substring(0, content.trimStart().indexOf("\n")) + "."
+  const infos = await Promise.all(
+    fileNames.map(async fn => {
+      const { data, content } = readMatter(fn)
+      const [date, ...rest] = fn.replace(/\.md$/, "").split("-")
+      const slug = rest.join("-")
+      const year = date.slice(0, 4)
+      const month = date.slice(4, 6)
+      const day = date.slice(6, 8)
+      const id: PostId = { year, month, day, slug }
+      const introMd = content.substring(0, content.trimStart().indexOf("\n")) + "..."
+      const introVFile = await processor.process(introMd)
+      let intro = introVFile.toString()
+      intro = intro.replaceAll(/<\/\s*a\s*>|<\s*a\b[^>]*>|<\/\s*p\s*>|<\s*p\s*>/gi, "")
 
-    return {
-      id,
-      intro,
-      ...data
-    }
-  })
+      return {
+        id,
+        intro,
+        ...data
+      }
+    })
+  )
   return infos
 }

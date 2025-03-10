@@ -7,8 +7,8 @@ export const metadata = {
   title: `Articles | ${BASE_TITLE}`
 }
 
-export default function Home() {
-  const postInfos = getPostInfosOrderedByDateDesc()
+export default async function Home() {
+  const postInfos = await getPostInfosOrderedByDateDesc()
   return (
     <ol className="flex flex-col justify-center items-center gap-4 pb-8">
       {postInfos.map((p, i) => {
@@ -23,7 +23,7 @@ export default function Home() {
               <WrittenDate date={date} />
               <div className="pl-2">
                 <h3 className="text-xl py-2">{title}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300">{intro}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300" dangerouslySetInnerHTML={{ __html: intro }} />
               </div>
             </Link>
           </li>
