@@ -157,6 +157,9 @@ This file contains a piece of MSBuild script that is imported to the C# project 
         <RtConfigurationMethod>
             BlazorTsInteropExample.Stuff.ReinforcedTypings.ReinforcedTypingsConfiguration.Configure
         </RtConfigurationMethod>
+        <RtBypassTypeScriptCompilation>false</RtBypassTypeScriptCompilation>
+        <RtDisable>false</RtDisable>
+        <RtSuppress>RTW0013;RTW0014;RT0008</RtSuppress>
     </PropertyGroup>
 </Project>
 ```
