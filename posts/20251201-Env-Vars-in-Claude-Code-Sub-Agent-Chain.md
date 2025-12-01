@@ -10,9 +10,9 @@ prenote: This article was written based on Claude Code v2.0.55.
 
 Consider this scenario: you ask Claude Code to set an environment variable and then spawn a sub-agent, expecting the sub-agent to read that variable:
 
-```
-USER: Hi! Please set env var MYSTERY to 42 and then spawn a sub-agent and ask
-them to check what value they have in their MYSTERY env var.
+```bash
+USER: "Hi! Please set env var MYSTERY to 42 and then spawn a sub-agent and ask
+       them to check what value they have in their MYSTERY env var."
 ```
 
 The sub-agent won't see `MYSTERY=42`. Sub-agents are separate processes — when Claude Code spawns one, it creates a new instance with a fresh environment. Variables set in the parent exist only in that parent's memory space and don't propagate to children created later.
