@@ -1,13 +1,21 @@
 import WrittenTime from "@/app/components/WrittenTime"
 import { BASE_TITLE, getPostById, getPostInfosOrderedByDateDesc } from "@/lib"
 import { Metadata } from "next"
+import { notFound } from "next/navigation"
 import "./styles.css"
 
 type PostProps = {
   params: { id: [string, string, string, string] }
 }
 
+function isValidPostId(id: string[]): id is [string, string, string, string] {
+  return id.length === 4 && /^\d{4}$/.test(id[0]) && /^\d{2}$/.test(id[1]) && /^\d{2}$/.test(id[2])
+}
+
 export async function generateMetadata(props: PostProps): Promise<Metadata> {
+  if (!isValidPostId(props.params.id)) {
+    return { title: BASE_TITLE }
+  }
   const [year, month, day, slug] = props.params.id
   const { title } = await getPostById({ year, month, day, slug })
   return {
@@ -16,6 +24,9 @@ export async function generateMetadata(props: PostProps): Promise<Metadata> {
 }
 
 export default async function Post(props: PostProps) {
+  if (!isValidPostId(props.params.id)) {
+    notFound()
+  }
   const [year, month, day, slug] = props.params.id
   const { html, title, prenote, date } = await getPostById({ year, month, day, slug })
   return (
