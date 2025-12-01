@@ -17,7 +17,7 @@ them to check what value they have in their MYSTERY env var.
 
 The sub-agent won't see `MYSTERY=42`. Sub-agents are separate processes — when Claude Code spawns one, it creates a new instance with a fresh environment. Variables set in the parent exist only in that parent's memory space and don't propagate to children created later.
 
-This creates friction in agent orchestration. Without variable inheritance, passing context and parameters to sub-agents requires either including them in downstream prompts or adding instructions to sub-agent workflows — both of which waste inference time and tokens.
+This creates friction in agent orchestration. Without variable inheritance, passing context and parameters to sub-agents requires either including them in downstream prompts or adding instructions to sub-agent workflows — both of which **waste inference time and tokens**.
 
 ## The Solution: A File-Based Environment Stack
 
