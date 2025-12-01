@@ -284,7 +284,7 @@ $ echo $ANOTHER
 
 AGENT:
 "The sub-agent confirmed MYSTERY=42 and set ANOTHER=67. Let me check if
-ANOTHER persists:"
+ ANOTHER persists:"
 $ echo $ANOTHER
 # (empty)
 ```
