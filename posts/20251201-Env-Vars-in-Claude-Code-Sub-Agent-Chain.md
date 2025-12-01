@@ -11,8 +11,9 @@ prenote: This article was written based on Claude Code v2.0.55.
 Consider this scenario: you ask Claude Code to set an environment variable and then spawn a sub-agent, expecting the sub-agent to read that variable:
 
 ```bash
-USER: "Hi! Please set env var MYSTERY to 42 and then spawn a sub-agent and ask
-       them to check what value they have in their MYSTERY env var."
+USER:
+"Hi! Please set env var MYSTERY to 42 and then spawn a sub-agent and ask them
+ to check what value they have in their MYSTERY env var."
 ```
 
 The sub-agent won't see `MYSTERY=42`. Sub-agents are separate processes — when Claude Code spawns one, it creates a new instance with a fresh environment. Variables set in the parent exist only in that parent's memory space and don't propagate to children created later.
@@ -263,29 +264,29 @@ Don't forget to make this script executable: `chmod +x ./setenv.sh`. All hook sc
 Here's a conversation demonstrating the environment variable inheritance:
 
 ```bash
-[USER]
+USER:
 "Set MYSTERY to 42 using setenv.sh, then spawn a sub-agent. The sub-agent
  should check the MYSTERY value, set ANOTHER to 67, then complete. After that,
  check if ANOTHER is still available."
 
-   [AGENT]
-   "I'll set MYSTERY and spawn a sub-agent."
-   $ ./setenv.sh MYSTERY 42
-   "Now spawning a sub-agent to check MYSTERY and set ANOTHER..."
+AGENT:
+"I'll set MYSTERY and spawn a sub-agent."
+$ ./setenv.sh MYSTERY 42
+"Now spawning a sub-agent to check MYSTERY and set ANOTHER..."
 
-      [SUB-AGENT]
-      $ echo $MYSTERY
-      42
-      $ ./setenv.sh ANOTHER 67
-      $ echo $ANOTHER
-      67
-      # Task complete.
+SUB-AGENT:
+$ echo $MYSTERY
+42
+$ ./setenv.sh ANOTHER 67
+$ echo $ANOTHER
+67
+# Task complete.
 
-   [AGENT]
-   "The sub-agent confirmed MYSTERY=42 and set ANOTHER=67. Let me check if
-    ANOTHER persists:"
-   $ echo $ANOTHER
-   # (empty)
+AGENT:
+"The sub-agent confirmed MYSTERY=42 and set ANOTHER=67. Let me check if
+ANOTHER persists:"
+$ echo $ANOTHER
+# (empty)
 ```
 
 As expected, `ANOTHER` is not available. When the sub-agent completed, its env file (containing `ANOTHER=67`) was removed by the SubagentStop hook. Only the parent's variables persist.
