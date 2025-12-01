@@ -1,9 +1,10 @@
 ---
 title: Env Vars in Claude Code Sub-Agent Chain
 date: 2025-12-01 16:00
+prenote: This article was written based on Claude Code v2.0.55.
 ---
 
-Claude Code's sub-agent system is powerful for breaking down complex tasks, but there's a gap: environment variables set in a parent agent don't automatically propagate to child sub-agents. This article presents a hooks-based solution that enables environment variable inheritance across the entire agent chain.
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview)'s [sub-agent](https://code.claude.com/docs/en/sub-agents) system is powerful for breaking down complex tasks, but there's a gap: environment variables set in a parent agent don't automatically propagate to child sub-agents. This article presents a hooks-based solution that enables environment variable inheritance across the entire agent chain.
 
 ## The Problem
 
@@ -20,11 +21,13 @@ This creates friction in agent orchestration. Without variable inheritance, pass
 
 ## The Solution: A File-Based Environment Stack
 
-The key insight is to use the filesystem as a shared state mechanism, combined with Claude Code's hooks system to manage the lifecycle. Here's the high-level approach:
+The key insight is to use the filesystem as a shared state mechanism, combined with Claude Code's [hooks](https://docs.claude.com/en/docs/claude-code/hooks) system to manage the lifecycle. Here's the high-level approach:
 
 1. **A working directory** (`.claude/env-vars/`) stores environment variable files
 2. **A helper script** writes variables to the current env file
 3. **Hooks** manage the stack of env files and inject them into Bash commands
+
+Hooks are shell commands that Claude Code executes automatically at specific lifecycle events — when the user submits a prompt, before a tool runs, or when a sub-agent completes. They can inspect and modify tool inputs, block actions, or perform side effects. This makes them ideal for injecting our environment variable logic at exactly the right moments.
 
 The "stack" is crucial for nested sub-agents. When a root agent spawns a sub-agent (level 1), which then spawns another sub-agent (level 2), we need separate env files for each level. The stack ensures that:
 
@@ -107,10 +110,10 @@ In `.claude/settings.local.json`:
 
 The hooks serve distinct purposes:
 
-- **UserPromptSubmit**: Fires when the user sends a message; we use it to reset state for new conversations
-- **PreToolUse(Task)**: Fires before spawning a sub-agent; we push a new env file onto the stack
-- **PreToolUse(Bash)**: Fires before every Bash command; we inject env vars by modifying the command
-- **SubagentStop**: Fires when a sub-agent completes; we pop its env file from the stack
+- [**UserPromptSubmit**](https://docs.claude.com/en/docs/claude-code/hooks#hook-events): Fires when the user sends a message; we use it to reset state for new conversations
+- [**PreToolUse**](https://docs.claude.com/en/docs/claude-code/hooks#hook-events)(Task): Fires before spawning a sub-agent; we push a new env file onto the stack
+- **PreToolUse**(Bash): Fires before every Bash command; we inject env vars by modifying the command
+- [**SubagentStop**](https://docs.claude.com/en/docs/claude-code/hooks#hook-events): Fires when a sub-agent completes; we pop its env file from the stack
 
 ### The Hooks
 
@@ -259,11 +262,11 @@ Don't forget to make this script executable: `chmod +x ./setenv.sh`. All hook sc
 
 Here's a conversation demonstrating the environment variable inheritance:
 
-```
+```bash
 [USER]
 "Set MYSTERY to 42 using setenv.sh, then spawn a sub-agent. The sub-agent
-should check the MYSTERY value, set ANOTHER to 67, then complete. After that,
-check if ANOTHER is still available."
+ should check the MYSTERY value, set ANOTHER to 67, then complete. After that,
+ check if ANOTHER is still available."
 
    [AGENT]
    "I'll set MYSTERY and spawn a sub-agent."
@@ -276,13 +279,13 @@ check if ANOTHER is still available."
       $ ./setenv.sh ANOTHER 67
       $ echo $ANOTHER
       67
-      Task complete.
+      # Task complete.
 
    [AGENT]
    "The sub-agent confirmed MYSTERY=42 and set ANOTHER=67. Let me check if
-   ANOTHER persists:"
+    ANOTHER persists:"
    $ echo $ANOTHER
-   (empty)
+   # (empty)
 ```
 
 As expected, `ANOTHER` is not available. When the sub-agent completed, its env file (containing `ANOTHER=67`) was removed by the SubagentStop hook. Only the parent's variables persist.
