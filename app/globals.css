@@ -6,10 +6,8 @@
   --foreground-rgb: 0, 0, 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 209, 213, 219;
-  }
+.dark {
+  --foreground-rgb: 209, 213, 219;
 }
 
 * {
@@ -34,8 +32,6 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.dark {
+  color-scheme: dark;
 }

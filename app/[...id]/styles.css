@@ -40,18 +40,14 @@ div[data-rehype-pretty-code-title] {
   @apply text-violet-900 font-mono;
 }
 
-@media (prefers-color-scheme: dark) {
-  pre[data-theme="light"],
-  code[data-theme="light"] {
-    display: none;
-  }
+:root:not(.dark) pre[data-theme="dark"],
+:root:not(.dark) code[data-theme="dark"] {
+  display: none;
 }
 
-@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-  pre[data-theme="dark"],
-  code[data-theme="dark"] {
-    display: none;
-  }
+:root.dark pre[data-theme="light"],
+:root.dark code[data-theme="light"] {
+  display: none;
 }
 
 article p a {
