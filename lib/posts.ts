@@ -42,7 +42,7 @@ const processor = unified()
     behavior: "wrap"
   })
   .use(rehypePrettyCode, { theme: { light: "github-light", dark: "github-dark" } })
-  .use(rehypeStringify)
+  .use(rehypeStringify, { allowDangerousHtml: true })
 
 type GetPostByIdArgs = PostId
 export async function getPostById(args: GetPostByIdArgs) {
