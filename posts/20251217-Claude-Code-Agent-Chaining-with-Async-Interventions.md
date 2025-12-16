@@ -125,7 +125,7 @@ function formatOutput(output: string, sessionId: string): string {
 }
 ```
 
-Now you can poll as aggressively as you want. Each unsuccessful attempt is just a throwaway fork and the original session's token budget is not wasted.
+Now you can poll as aggressively as you want! (Well, the inference still costs, so not too agressively.) Each unsuccessful attempt is just a throwaway fork and the original session's token budget is not wasted.
 
 ## Achievements
 
